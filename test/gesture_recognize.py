@@ -25,23 +25,26 @@ if __name__ == "__main__":
     model.add(Dense(result_arr.shape[0], activation='softmax'))
     model.load_weights(test_model)
 
-    start = time.time()
+
     sequence = 0
 
     cap = cv2.VideoCapture(0)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, Config.CAMERA_WIDTH)  # 1280
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, Config.CAMERA_HEIGHT)  # 720
-
+    start = time.time()
     while True:
         ret, frame = cap.read()
         image, result = mp.mediapipe_detection(frame)
         mp.draw_styled_landmarks(image, result)
         remain = time.time() - start
         if remain > Config.WAIT_TIME:
+            print('start')
             sequences = []
+            # cap.release()
+            # cap = cv2.VideoCapture(
+            #     "C:\\Users\\JOE LAB\\Desktop\\최진우\\졸업작품\\SignLanguageDetection\\utils\\VV_Data\\6112\\3.avi")
             for idx in range(Config.SEQUENCE_LENGTH):
                 ret, frame = cap.read()
-
                 image, result = mp.mediapipe_detection(frame)
                 mp.draw_styled_landmarks(image, result)
                 keypoints = mp.extract_keypoints(result)
