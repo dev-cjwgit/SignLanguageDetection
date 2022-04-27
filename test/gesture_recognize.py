@@ -53,8 +53,8 @@ if __name__ == "__main__":
                 cv2.waitKey(2)
 
             res = model.predict(np.expand_dims(sequences, axis=0))[0]
-            print("per : " + str(res[np.argmax(res)]) + "\n"
-                "Res : " + str(Config.get_action_name(result_arr[np.argmax(res)])))
+            print("per : " + str(res[np.argmax(res)]) + "\nRes : " +
+                  str(Config.get_action_name(result_arr[np.argmax(res)])))
             sequence += 1
             start = time.time()
         else:

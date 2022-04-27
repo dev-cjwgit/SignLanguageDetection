@@ -42,8 +42,9 @@ if __name__ == "__main__":
                 keypoints = mp.extract_keypoints(result)
                 sequences.append(keypoints)
             res = model.predict(np.expand_dims(sequences, axis=0))[0]
-            if str(Config.get_action_name(result_arr[np.argmax(res)])) != action_name:
-                wrong.append((action_name, idx))
+            predict_action_name = str(Config.get_action_name(result_arr[np.argmax(res)]))
+            if predict_action_name != action_name:
+                wrong.append((action_name, idx, predict_action_name))
             else:
                 right += 1
             cap.release()
