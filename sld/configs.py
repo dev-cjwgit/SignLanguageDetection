@@ -17,6 +17,9 @@ class Config:
     MIN_DECTION_CONFIDENCE = 0.5
     MIN_TRACKING_CONFIDENCE = 0.5
 
+    # Train & Test
+    VALID_FOLDER = "VV_Data"
+
     # Videos_capture
     WAIT_TIME = 3
     SEQUENCE_LENGTH = 40
