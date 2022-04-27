@@ -19,8 +19,9 @@ class Config:
 
     # Videos_capture
     WAIT_TIME = 3
-    SEQUENCE_LENGTH = 30
+    SEQUENCE_LENGTH = 40
     VIDEO_FOLDER = "GV_Data"
+    FRAME_FOLDER = "MP_Data"
     FPS = 10
 
     # OpenCV Settings
@@ -29,4 +30,4 @@ class Config:
 
     @staticmethod
     def get_action_key():
-        return np.array(ACTIONS.keys())
+        return np.array(list(ACTIONS.keys()))

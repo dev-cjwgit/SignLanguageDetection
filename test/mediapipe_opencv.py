@@ -1,6 +1,7 @@
 from sld.mediapipes import *
-import cv2
 from sld.configs import Config
+import cv2
+
 
 if __name__ == "__main__":
     mp = MediaPipe(detection_option=["face", "pose", "lh", "rh"])
