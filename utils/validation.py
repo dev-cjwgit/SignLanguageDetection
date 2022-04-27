@@ -1,4 +1,5 @@
 import os
+from tqdm import tqdm
 from sld.mediapipes import *
 from sld.configs import Config
 from tensorflow.keras.models import Sequential
@@ -24,11 +25,14 @@ if __name__ == "__main__":
     model.add(Dense(result_arr.shape[0], activation='softmax'))
 
     model.load_weights(test_model)
-
+    total = 0
+    right = 0
+    wrong = []
     for action in action_list:
         movie_list = os.listdir(Config.VALID_FOLDER + "/" + action)
-        print("start : [" + Config.get_action_name(action) + "]", action)
-        for idx, movie in enumerate(movie_list):
+        action_name = Config.get_action_name(action)
+        print("start : [" + action_name + "]", action)
+        for idx, movie in tqdm(enumerate(movie_list)):
             cap = cv2.VideoCapture('./' + Config.VALID_FOLDER + "/" + action + "/" + movie)
             sequences = []
             for frame_idx in range(Config.SEQUENCE_LENGTH):
@@ -37,6 +41,13 @@ if __name__ == "__main__":
                 keypoints = mp.extract_keypoints(result)
                 sequences.append(keypoints)
             res = model.predict(np.expand_dims(sequences, axis=0))[0]
-            if res[np.argmax(res)] > Config.RECOGNIZE_THRESHOLD:
-                print("Res : " + str(Config.get_action_name(result_arr[np.argmax(res)])))
+            if str(Config.get_action_name(result_arr[np.argmax(res)])) != action_name:
+                wrong.append((action_name, idx))
+            else:
+                right += 1
             cap.release()
+            total += 1
+    print("정답률 : " + str(right / total * 100))
+    print('-' * 100)
+    for i in wrong:
+        print(i)
