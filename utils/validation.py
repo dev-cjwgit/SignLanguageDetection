@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     for action in action_list:
         movie_list = os.listdir(Config.VALID_FOLDER + "/" + action)
-        print("start : [" + action + "]")
+        print("start : [" + Config.get_action_name(action) + "]", action)
         for idx, movie in enumerate(movie_list):
             cap = cv2.VideoCapture('./' + Config.VALID_FOLDER + "/" + action + "/" + movie)
             sequences = []
@@ -38,5 +38,5 @@ if __name__ == "__main__":
                 sequences.append(keypoints)
             res = model.predict(np.expand_dims(sequences, axis=0))[0]
             if res[np.argmax(res)] > Config.RECOGNIZE_THRESHOLD:
-                print("Act : " + action, "Res : " + str(result_arr[np.argmax(res)]))
+                print("Res : " + str(Config.get_action_name(result_arr[np.argmax(res)])))
             cap.release()

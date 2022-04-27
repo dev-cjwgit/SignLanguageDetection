@@ -3,12 +3,12 @@ import numpy as np
 # Project Settings
 
 ACTIONS = [
-    {"0": "동작 없음"},
-    {"6045": "신기록"},
-    {"6112": "수제비"},
-    {"2673": "뽀뽀"},
-    {"8229": "월세"},
-    {"15526": "사용자"}
+    ("0", "동작 없음"),
+    ("6045", "신기록"),
+    ("6112", "수제비"),
+    ("2673", "뽀뽀"),
+    ("8229", "월세"),
+    ("15526", "사용자")
 ]
 
 
@@ -34,8 +34,14 @@ class Config:
 
     @staticmethod
     def get_action_num():
-        return np.array([list(i.keys()) for i in ACTIONS]).squeeze(axis=1)
+        return np.array([i[0] for i in ACTIONS])
 
     @staticmethod
     def get_action_dict():
         return ACTIONS
+
+    @staticmethod
+    def get_action_name(action_num):
+        for action in ACTIONS:
+            if action_num == action[0]:
+                return action[1]
