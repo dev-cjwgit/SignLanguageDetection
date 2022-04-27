@@ -45,6 +45,7 @@ if __name__ == "__main__":
             predict_action_name = str(Config.get_action_name(result_arr[np.argmax(res)]))
             if predict_action_name != action_name:
                 wrong.append((action_name, movie, predict_action_name))
+                print("faild", wrong[-1])
             else:
                 right += 1
             cap.release()

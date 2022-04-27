@@ -42,7 +42,7 @@ if __name__ == "__main__":
             sequences = []
             # cap.release()
             # cap = cv2.VideoCapture(
-            #     "C:\\Users\\JOE LAB\\Desktop\\최진우\\졸업작품\\SignLanguageDetection\\utils\\VV_Data\\6112\\3.avi")
+            #     "C:\\Users\\JOE LAB\\Desktop\\최진우\\졸업작품\\SignLanguageDetection\\utils\\VV_Data\\6112\\1.avi")
             for idx in range(Config.SEQUENCE_LENGTH):
                 ret, frame = cap.read()
                 image, result = mp.mediapipe_detection(frame)
