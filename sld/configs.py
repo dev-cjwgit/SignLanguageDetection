@@ -1,15 +1,15 @@
 import numpy as np
 
 # Project Settings
-ACTIONS = {
-    -1: "None",
-    "0": "동작 없음",
-    "6045": "신기록",
-    "6112": "수제비",
-    "2673": "뽀뽀",
-    "8229": "월세",
-    "15526": "사용자"
-}
+
+ACTIONS = [
+    {"0": "동작 없음"},
+    {"6045": "신기록"},
+    {"6112": "수제비"},
+    {"2673": "뽀뽀"},
+    {"8229": "월세"},
+    {"15526": "사용자"}
+]
 
 
 class Config:
@@ -19,6 +19,7 @@ class Config:
 
     # Train & Test
     VALID_FOLDER = "VV_Data"
+    RECOGNIZE_THRESHOLD = 0.5
 
     # Videos_capture
     WAIT_TIME = 3
@@ -32,5 +33,9 @@ class Config:
     CAMERA_HEIGHT = 720
 
     @staticmethod
-    def get_action_key():
-        return np.array(list(ACTIONS.keys()))
+    def get_action_num():
+        return np.array([list(i.keys()) for i in ACTIONS]).squeeze(axis=1)
+
+    @staticmethod
+    def get_action_dict():
+        return ACTIONS

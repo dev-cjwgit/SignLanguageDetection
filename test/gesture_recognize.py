@@ -1,60 +1,63 @@
 import time
-
+import os
+from sld.mediapipes import *
+from sld.configs import Config
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense
 from sld.mediapipes import *
 import cv2
 from sld.configs import Config
-import os
 
 if __name__ == "__main__":
-    DATA_PATH = os.path.join(Config.VIDEO_FOLDER)
-
-    # 제스처 이름
-    action = str(input("제스처 이름 : "))
-    count = int(input("동영상 개수 : "))
-    if not os.path.isdir(DATA_PATH + "/" + action):
-        os.makedirs(DATA_PATH + "/" + action)
-
-    pos = 0
-    while os.path.isfile('./' + Config.VIDEO_FOLDER + '/' + str(action) + "/" + str(pos) + ".avi"):
-        pos += 1
+    test_model = input("사용 모델 : ")
+    test_model += ".h5"
 
     mp = MediaPipe(detection_option=["pose", "lh", "rh"])
+
+    result_arr = Config.get_action_num()
+
+    model = Sequential()
+    model.add(LSTM(64, return_sequences=True, activation='relu', input_shape=(Config.SEQUENCE_LENGTH, 258)))
+    model.add(LSTM(128, return_sequences=True, activation='relu'))
+    model.add(LSTM(64, return_sequences=False, activation='relu'))
+    model.add(Dense(64, activation='relu'))
+    model.add(Dense(32, activation='relu'))
+    model.add(Dense(result_arr.shape[0], activation='softmax'))
+    model.load_weights(test_model)
+
+    start = time.time()
+    sequence = 0
 
     cap = cv2.VideoCapture(0)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, Config.CAMERA_WIDTH)  # 1280
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, Config.CAMERA_HEIGHT)  # 720
-    fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 
-    start = time.time()
-    sequence = 0
-    while sequence < count:
+    while True:
         ret, frame = cap.read()
         image, result = mp.mediapipe_detection(frame)
         mp.draw_styled_landmarks(image, result)
         remain = time.time() - start
         if remain > Config.WAIT_TIME:
-            out = cv2.VideoWriter(DATA_PATH + "/" + action + "/" + str(sequence + pos) + ".avi", fourcc, Config.FPS,
-                                  (Config.CAMERA_WIDTH, Config.CAMERA_HEIGHT))
-            # st = time.time()
-            # about 2.5sec
+            sequences = []
             for idx in range(Config.SEQUENCE_LENGTH):
                 ret, frame = cap.read()
-                out.write(frame)
 
                 image, result = mp.mediapipe_detection(frame)
                 mp.draw_styled_landmarks(image, result)
-
+                keypoints = mp.extract_keypoints(result)
+                sequences.append(keypoints)
                 cv2.putText(image, 'capture %d frame' % (idx), (100, 100),
                             cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 255), 5, cv2.LINE_AA)
 
                 cv2.imshow("utils", image)
                 cv2.waitKey(2)
+
+            res = model.predict(np.expand_dims(sequences, axis=0))[0]
+            print("per : " + str(res[np.argmax(res)]) + "\nRes : " + str(result_arr[np.argmax(res)]))
             sequence += 1
             start = time.time()
-            # print(time.time() - st)
         else:
             cv2.putText(image, '%d wait %.2f sec ' % (sequence, Config.WAIT_TIME - remain), (100, 100),
                         cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 0, 0), 5, cv2.LINE_AA)
-
         cv2.imshow("utils", image)
         cv2.waitKey(1)

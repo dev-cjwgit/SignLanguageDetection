@@ -14,13 +14,9 @@ if __name__ == "__main__":
     if os.path.isfile(model_name):
         raise Exception("이미 존재하는 모델입니다.")
 
-    label_map = {label: num for num, label in enumerate(Config.get_action_key())}
-    if '-1' in label_map:
-        del label_map['-1']
+    label_map = {label: num for num, label in enumerate(Config.get_action_num())}
     sequences, labels = [], []
-    for action in Config.get_action_key():
-        if action == "-1":
-            continue
+    for action in Config.get_action_num():
         for sequence in np.array(os.listdir(os.path.join(DATA_PATH, action))).astype(int):
             window = []
             for frame_num in range(Config.SEQUENCE_LENGTH):
@@ -42,7 +38,7 @@ if __name__ == "__main__":
     model.add(LSTM(64, return_sequences=False, activation='relu'))
     model.add(Dense(64, activation='relu'))
     model.add(Dense(32, activation='relu'))
-    model.add(Dense(Config.get_action_key().shape[0], activation='softmax'))
+    model.add(Dense(Config.get_action_num().shape[0], activation='softmax'))
     model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
 
     try:
