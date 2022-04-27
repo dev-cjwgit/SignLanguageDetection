@@ -28,11 +28,12 @@ if __name__ == "__main__":
     total = 0
     right = 0
     wrong = []
-    for action in action_list:
+    print()
+    for action in tqdm(action_list):
         movie_list = os.listdir(Config.VALID_FOLDER + "/" + action)
         action_name = Config.get_action_name(action)
         print("start : [" + action_name + "]", action)
-        for idx, movie in tqdm(enumerate(movie_list)):
+        for idx, movie in enumerate(movie_list):
             cap = cv2.VideoCapture('./' + Config.VALID_FOLDER + "/" + action + "/" + movie)
             sequences = []
             for frame_idx in range(Config.SEQUENCE_LENGTH):
@@ -47,7 +48,8 @@ if __name__ == "__main__":
                 right += 1
             cap.release()
             total += 1
-    print("정답률 : " + str(right / total * 100))
+    print("total : " + str(total) + "\n정답률 : " + str(right / total * 100))
     print('-' * 100)
+    print(len(wrong), "개 실패")
     for i in wrong:
         print(i)
