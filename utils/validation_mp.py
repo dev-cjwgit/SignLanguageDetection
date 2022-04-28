@@ -33,20 +33,17 @@ if __name__ == "__main__":
         movie_list = os.listdir(Config.VALID_FOLDER_MP + "/" + action)
         action_name = Config.get_action_name(action)
         for movie in tqdm(movie_list, desc=action_name):
-            cap = cv2.VideoCapture('./' + Config.VALID_FOLDER_MP + "/" + action + "/" + movie)
             sequences = []
-            for frame_idx in range(Config.SEQUENCE_LENGTH):
-                ret, frame = cap.read()
-                image, result = mp.mediapipe_detection(frame)
-                keypoints = mp.extract_keypoints(result)
-                sequences.append(keypoints)
+            for frame_num in range(Config.SEQUENCE_LENGTH):
+                res = np.load(os.path.join(Config.VALID_FOLDER_MP, action, str(movie), "{}.npy".format(frame_num)))
+                sequences.append(res)
+
             res = model.predict(np.expand_dims(sequences, axis=0))[0]
             predict_action_name = str(Config.get_action_name(result_arr[np.argmax(res)]))
             if predict_action_name != action_name:
                 wrong.append((action_name, movie, predict_action_name))
             else:
                 right += 1
-            cap.release()
             total += 1
     print("total : " + str(total) + "\n정답률 : " + str(right / total * 100))
     print('-' * 100)
