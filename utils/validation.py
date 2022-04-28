@@ -29,11 +29,10 @@ if __name__ == "__main__":
     right = 0
     wrong = []
     print()
-    for action in tqdm(action_list):
+    for action in action_list:
         movie_list = os.listdir(Config.VALID_FOLDER + "/" + action)
         action_name = Config.get_action_name(action)
-        print("start : [" + action_name + "]", action)
-        for idx, movie in enumerate(movie_list):
+        for movie in tqdm(movie_list, desc=action_name):
             cap = cv2.VideoCapture('./' + Config.VALID_FOLDER + "/" + action + "/" + movie)
             sequences = []
             for frame_idx in range(Config.SEQUENCE_LENGTH):
@@ -45,7 +44,6 @@ if __name__ == "__main__":
             predict_action_name = str(Config.get_action_name(result_arr[np.argmax(res)]))
             if predict_action_name != action_name:
                 wrong.append((action_name, movie, predict_action_name))
-                print("faild", wrong[-1])
             else:
                 right += 1
             cap.release()
