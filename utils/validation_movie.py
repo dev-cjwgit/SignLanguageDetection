@@ -9,7 +9,7 @@ if __name__ == "__main__":
     test_model = input("테스트 모델 : ")
     test_model += ".h5"
 
-    action_list = os.listdir(Config.VALID_FOLDER)
+    action_list = os.listdir(Config.VALID_FOLDER_VIDEO)
 
     print(action_list)
 
@@ -30,10 +30,10 @@ if __name__ == "__main__":
     wrong = []
     print()
     for action in action_list:
-        movie_list = os.listdir(Config.VALID_FOLDER + "/" + action)
+        movie_list = os.listdir(Config.VALID_FOLDER_VIDEO + "/" + action)
         action_name = Config.get_action_name(action)
         for movie in tqdm(movie_list, desc=action_name):
-            cap = cv2.VideoCapture('./' + Config.VALID_FOLDER + "/" + action + "/" + movie)
+            cap = cv2.VideoCapture('./' + Config.VALID_FOLDER_VIDEO + "/" + action + "/" + movie)
             sequences = []
             for frame_idx in range(Config.SEQUENCE_LENGTH):
                 ret, frame = cap.read()

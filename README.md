@@ -21,3 +21,8 @@ Python 3.8.x
 실시간 테스트 = test/gesutre_recognize.py
 
 configs/Config의 ACTIONS 참고
+
+GV_Data = 동영상 원본 데이터
+MP_Data = 동영상 프레임 MP Point 데이터
+VV_Data = Valid 동영상 원본 데이터
+VMP_Data = Valid 동영상 프레임 MP Point 데이터

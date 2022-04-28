@@ -25,7 +25,8 @@ class Config:
     MIN_TRACKING_CONFIDENCE = 0.5
 
     # Train & Test
-    VALID_FOLDER = "VV_Data"
+    VALID_FOLDER_VIDEO = "VV_Data"
+    VALID_FOLDER_MP = "VMP_Data"
     RECOGNIZE_THRESHOLD = 0.5
 
     # Videos_capture
