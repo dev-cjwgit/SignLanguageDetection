@@ -27,12 +27,8 @@ if __name__ == "__main__":
 
     X = np.array(sequences)
     Y = to_categorical(labels).astype(int)
-    """
-        X_text, Y_text를 이용하여 Validation이 가능 하지만
-        따로 만든 Validation을 사용함.
-        그래서 test_size를 굉장히 적게줌
-    """
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.00001)
+
+    X_train, Y_train = X, Y
 
     log_dir = os.path.join('Logs')
     tb_callback = TensorBoard(log_dir=log_dir)

@@ -25,7 +25,6 @@ if __name__ == "__main__":
     model.add(Dense(result_arr.shape[0], activation='softmax'))
     model.load_weights(test_model)
 
-
     sequence = 0
 
     cap = cv2.VideoCapture(0)
@@ -40,9 +39,7 @@ if __name__ == "__main__":
         if remain > Config.WAIT_TIME:
             print('start')
             sequences = []
-            # cap.release()
-            # cap = cv2.VideoCapture(
-            #     "C:\\Users\\JOE LAB\\Desktop\\최진우\\졸업작품\\SignLanguageDetection\\utils\\VV_Data\\6112\\1.avi")
+            st = time.time()
             for idx in range(Config.SEQUENCE_LENGTH):
                 ret, frame = cap.read()
                 image, result = mp.mediapipe_detection(frame)
@@ -54,7 +51,7 @@ if __name__ == "__main__":
 
                 cv2.imshow("utils", image)
                 cv2.waitKey(2)
-
+            print(time.time() - st)
             res = model.predict(np.expand_dims(sequences, axis=0))[0]
             print("per : " + str(res[np.argmax(res)]) + "\nRes : " +
                   str(Config.get_action_name(result_arr[np.argmax(res)])))
