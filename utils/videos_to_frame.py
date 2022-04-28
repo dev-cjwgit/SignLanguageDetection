@@ -13,10 +13,9 @@ if __name__ == "__main__":
 
     mp = MediaPipe(detection_option=["pose", "lh", "rh"])
 
-    for action in tqdm(action_list):
+    for action in tqdm(action_list, desc="all"):
         movie_list = os.listdir(Config.VIDEO_FOLDER + "/" + action)
-        print("start : [" + action + "]")
-        for movie in tqdm(movie_list):
+        for movie in tqdm(movie_list, desc=action):
             movie_name = ''.join(movie.split('.')[:-1])
             if os.path.isdir(os.path.join(DATA_PATH,
                                           action,
