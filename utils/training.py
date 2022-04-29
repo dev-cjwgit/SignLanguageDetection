@@ -1,6 +1,7 @@
 import os
 from sld.configs import Config
 import numpy as np
+from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
@@ -16,8 +17,8 @@ if __name__ == "__main__":
 
     label_map = {label: num for num, label in enumerate(Config.get_action_num())}
     sequences, labels = [], []
-    for action in Config.get_action_num():
-        for sequence in np.array(os.listdir(os.path.join(DATA_PATH, action))).astype(int):
+    for action in tqdm(Config.get_action_num(), desc="ALL"):
+        for sequence in tqdm(np.array(os.listdir(os.path.join(DATA_PATH, action))).astype(int)):
             window = []
             for frame_num in range(Config.SEQUENCE_LENGTH):
                 res = np.load(os.path.join(DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
