@@ -8,6 +8,8 @@ from tensorflow.keras.layers import LSTM, Dense
 from tensorflow.keras.callbacks import TensorBoard
 from tensorflow.keras.utils import to_categorical
 
+from utils.DatasetLoader import DatasetLoader
+
 if __name__ == "__main__":
     DATA_PATH = os.path.join(Config.FRAME_FOLDER)
     model_name = input("모델 이름 : ")
@@ -15,19 +17,10 @@ if __name__ == "__main__":
     if os.path.isfile(model_name):
         raise Exception("이미 존재하는 모델입니다.")
 
-    label_map = {label: num for num, label in enumerate(Config.get_action_num())}
-    sequences, labels = [], []
-    for action in tqdm(Config.get_action_num(), desc="ALL"):
-        for sequence in tqdm(np.array(os.listdir(os.path.join(DATA_PATH, action))).astype(int)):
-            window = []
-            for frame_num in range(Config.SEQUENCE_LENGTH):
-                res = np.load(os.path.join(DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
-                window.append(res)
-            sequences.append(window)
-            labels.append(label_map[action])
+    loader = DatasetLoader(Config.DATASET_DB_FILE)
 
-    X = np.array(sequences)
-    Y = to_categorical(labels).astype(int)
+    X = loader.data
+    Y = loader.labels
 
     X_train, Y_train = X, Y
 

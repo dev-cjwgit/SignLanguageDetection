@@ -32,15 +32,16 @@ class Config:
     MIN_TRACKING_CONFIDENCE = 0.5
 
     # Train & Test
-    VALID_FOLDER_VIDEO = "VV_Data"
-    VALID_FOLDER_MP = "VMP_Data"
+    VALID_FOLDER_VIDEO = "dataset/VV_Data"
+    VALID_FOLDER_MP = "dataset/VMP_Data"
     RECOGNIZE_THRESHOLD = 0.5
 
     # Videos_capture
     WAIT_TIME = 3
     SEQUENCE_LENGTH = 40
-    VIDEO_FOLDER = "GV_Data"
-    FRAME_FOLDER = "MP_Data"
+    VIDEO_FOLDER = "dataset/GV_Data"
+    FRAME_FOLDER = "dataset/MP_Data"
+    DATASET_DB_FILE = "dataset/dataset.db"
     FPS = 10
 
     # OpenCV Settings
@@ -49,6 +50,8 @@ class Config:
 
     @staticmethod
     def get_action_num():
+        temp = [i[0] for i in ACTIONS]
+        temp.sort(key=lambda x: int(x[0]))
         return np.array([i[0] for i in ACTIONS])
 
     @staticmethod

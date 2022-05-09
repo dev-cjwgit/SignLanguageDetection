@@ -31,6 +31,22 @@ if __name__ == "__main__":
         ret, frame = cap.read()
         image, result = mp.mediapipe_detection(frame)
         mp.draw_styled_landmarks(image, result)
+        image = cv2.circle(image,
+                           (Config.CAMERA_WIDTH // 2, Config.CAMERA_HEIGHT // 12 * 3),
+                           Config.CAMERA_HEIGHT // 12 * 2,
+                           (255, 0, 0),
+                           thickness=2,
+                           lineType=cv2.LINE_AA)
+
+        # 원의 중심, 반지름, 선의 색, 굵기, 선 표현법
+        cv2.rectangle(image,
+                      (Config.CAMERA_WIDTH // 8, Config.CAMERA_HEIGHT // 12 * 5),
+                      (Config.CAMERA_WIDTH - Config.CAMERA_WIDTH // 8, Config.CAMERA_HEIGHT),
+                      (255, 0, 0),
+                      thickness=2,
+                      lineType=cv2.LINE_AA)
+
+        # 좌측 상단 꼭지점, 우측 하단 꼭지점 , 색, 두께, 선 표현법
         remain = time.time() - start
         if remain > Config.WAIT_TIME:
             out = cv2.VideoWriter(DATA_PATH + "/" + action + "/" + str(sequence + pos) + ".avi", fourcc, Config.FPS,
@@ -43,6 +59,20 @@ if __name__ == "__main__":
 
                 image, result = mp.mediapipe_detection(frame)
                 mp.draw_styled_landmarks(image, result)
+                image = cv2.circle(image,
+                                   (Config.CAMERA_WIDTH // 2, Config.CAMERA_HEIGHT // 12 * 3),
+                                   Config.CAMERA_HEIGHT // 12 * 2,
+                                   (255, 0, 0),
+                                   thickness=2,
+                                   lineType=cv2.LINE_AA)
+
+                # 원의 중심, 반지름, 선의 색, 굵기, 선 표현법
+                cv2.rectangle(image,
+                              (Config.CAMERA_WIDTH // 8, Config.CAMERA_HEIGHT // 12 * 5),
+                              (Config.CAMERA_WIDTH - Config.CAMERA_WIDTH // 8, Config.CAMERA_HEIGHT),
+                              (255, 0, 0),
+                              thickness=2,
+                              lineType=cv2.LINE_AA)
 
                 cv2.putText(image, 'capture %d frame' % (idx), (100, 100),
                             cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 255), 5, cv2.LINE_AA)

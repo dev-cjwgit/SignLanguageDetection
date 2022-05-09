@@ -41,7 +41,7 @@ if __name__ == "__main__":
             res = model.predict(np.expand_dims(sequences, axis=0))[0]
             predict_action_name = str(Config.get_action_name(result_arr[np.argmax(res)]))
             if predict_action_name != action_name:
-                wrong.append((action_name, movie, predict_action_name))
+                wrong.append((action_name, action, movie, predict_action_name))
             else:
                 right += 1
             total += 1

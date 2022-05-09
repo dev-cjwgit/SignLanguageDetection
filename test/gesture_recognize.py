@@ -9,8 +9,9 @@ import cv2
 from sld.configs import Config
 
 if __name__ == "__main__":
-    test_model = input("사용 모델 : ")
-    test_model += ".h5"
+    # test_model = input("사용 모델 : ")
+    # test_model += ".h5"
+    test_model = "cjw_khy20_90.h5"
 
     mp = MediaPipe(detection_option=["pose", "lh", "rh"])
 
