@@ -19,8 +19,8 @@ if __name__ == "__main__":
 
     loader = DatasetLoader(Config.DATASET_DB_FILE)
 
-    X = loader.data
-    Y = loader.labels
+    X = np.array(loader.data)
+    Y = to_categorical(loader.labels).astype(int)
 
     X_train, Y_train = X, Y
 

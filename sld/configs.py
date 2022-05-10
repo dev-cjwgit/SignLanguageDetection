@@ -42,6 +42,7 @@ class Config:
     VIDEO_FOLDER = "dataset/GV_Data"
     FRAME_FOLDER = "dataset/MP_Data"
     DATASET_DB_FILE = "dataset/dataset.db"
+    VALIDSET_DB_FILE = "dataset/validset.db"
     FPS = 10
 
     # OpenCV Settings

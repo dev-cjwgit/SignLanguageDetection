@@ -1,4 +1,5 @@
 import os
+import time
 from tqdm import tqdm
 from sld.mediapipes import *
 from sld.configs import Config
@@ -28,7 +29,7 @@ if __name__ == "__main__":
     total = 0
     right = 0
     wrong = []
-    print()
+    st = time.time()
     for action in action_list:
         movie_list = os.listdir(Config.VALID_FOLDER_MP + "/" + action)
         action_name = Config.get_action_name(action)
@@ -45,6 +46,7 @@ if __name__ == "__main__":
             else:
                 right += 1
             total += 1
+    print(time.time() - st)
     print("total : " + str(total) + "\n정답률 : " + str(right / total * 100))
     print('-' * 100)
     print(len(wrong), "개 실패")

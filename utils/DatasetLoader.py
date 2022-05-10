@@ -34,9 +34,6 @@ class DatasetLoader:
                 self.data.append(window[:])
                 window.clear()
 
-        self.labels = to_categorical(self.labels).astype(int)
-        self.data = np.array(self.data)
-
     def __init__(self, file_name):
         self.conn = sqlite3.connect(file_name)
         self.cur = self.conn.cursor()
