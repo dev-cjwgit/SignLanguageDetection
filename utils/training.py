@@ -36,7 +36,7 @@ if __name__ == "__main__":
     model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
 
     try:
-        model.fit(X_train, Y_train, epochs=250, callbacks=[tb_callback])
+        model.fit(X_train, Y_train, epochs=150, callbacks=[tb_callback])
     except Exception as e:
         print(e)
     except KeyboardInterrupt as e:
