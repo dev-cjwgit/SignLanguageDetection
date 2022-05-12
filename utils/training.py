@@ -11,7 +11,6 @@ from tensorflow.keras.utils import to_categorical
 from utils.DatasetLoader import DatasetLoader
 
 if __name__ == "__main__":
-    DATA_PATH = os.path.join(Config.FRAME_FOLDER)
     model_name = input("모델 이름 : ")
     model_name += ".h5"
     if os.path.isfile(model_name):
@@ -37,7 +36,7 @@ if __name__ == "__main__":
     model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
 
     try:
-        model.fit(X_train, Y_train, epochs=10000, callbacks=[tb_callback])
+        model.fit(X_train, Y_train, epochs=250, callbacks=[tb_callback])
     except Exception as e:
         print(e)
     except KeyboardInterrupt as e:

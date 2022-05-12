@@ -22,7 +22,8 @@ ACTIONS = [
     ("10192", "정장"),
     ("6212", "대학교"),
     ("8382", "복습"),
-    ("9228", "상장")
+    ("9228", "상장"),
+    ("11823", "식장")
 ]
 
 
@@ -33,14 +34,12 @@ class Config:
 
     # Train & Test
     VALID_FOLDER_VIDEO = "dataset/VV_Data"
-    VALID_FOLDER_MP = "dataset/VMP_Data"
     RECOGNIZE_THRESHOLD = 0.5
 
     # Videos_capture
     WAIT_TIME = 3
     SEQUENCE_LENGTH = 40
     VIDEO_FOLDER = "dataset/GV_Data"
-    FRAME_FOLDER = "dataset/MP_Data"
     DATASET_DB_FILE = "dataset/dataset.db"
     VALIDSET_DB_FILE = "dataset/validset.db"
     FPS = 10
