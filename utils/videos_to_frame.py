@@ -4,7 +4,7 @@ from tqdm import tqdm
 
 from utils.DatasetWriter import DatasetWriter
 
-mode = "valid"  # train, valid
+mode = "train"  # train, valid
 
 if __name__ == "__main__":
     if mode == "train":
