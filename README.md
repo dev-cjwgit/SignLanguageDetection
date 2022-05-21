@@ -5,13 +5,13 @@ Python 3.8.13
 opencv 4.5.5.64
 
 #Dependency Library
-<h2>terminal</h2>
 
-    cd ../SignLanguageDetection/
+<h2>windows</h2>
+
     pip install tensorflow==2.4.1 tensorflow-gpu==2.4.1 opencv-python mediapipe sklearn matplotlib tqdm
 
 
-<h2>m1 mac<h2>
+<h2>m1 mac</h2>
    
     pip install mediapipe-silicon
     conda install -c apple tensorflow-deps
@@ -19,6 +19,7 @@ opencv 4.5.5.64
     python -m pip install tensorflow-metal
     pip install opencv-python sklearn matplotlib tqdm
     
+   
 비디오 저장 = utils/videos_capture.py
 
 비디오를 프레임으로 변환 = utils/videos_to_frame.py
